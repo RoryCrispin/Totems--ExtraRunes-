@@ -4,12 +4,15 @@ package com.teckwiz.extrarunes;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -90,12 +93,45 @@ public class ERplayerListener extends PlayerListener {
 		nb.setTypeId(45);
 		player.sendMessage("Oops!");
 		inventory.remove(brick);
-		inventory.removeItem(brick);
-		
-		
-		
+		inventory.removeItem(brick);	
+	}
+	
+	
+	//*****************************************************//
+	//*                                                   *//
+	//*                                                   *//
+	//*               	   LIGHTNING                      *//
+	//*                                                   *//
+	//*                                                   *//
+	//*****************************************************//
+	if(i1 == 42 && i3 == 49 && i4 == 42) {
+	    if(b2.getType() == Material.SIGN_POST){
+	        BlockState state = b2.getState();
+	        if(state instanceof Sign){
+	        Sign sign = (Sign)state;
+	        String line = sign.getLine(1);
+	        player.sendMessage("Line2:" + line);
+	        Player target = (Bukkit.getServer().getPlayer(line));
+	        if (target == null) {
+	        	player.sendMessage("The target was not present!");
+	        } else {
+	        	target.setNoDamageTicks(6);
+	        	target.setFireTicks(6);
+	        	Location lightning = target.getLocation();
+	        target.getWorld().strikeLightning(lightning);
+	        b2.setTypeId(0);
+	        b3.setTypeId(0);
+	        event.getClickedBlock().getWorld().createExplosion(loclick, 0);
+	        event.getClickedBlock().getWorld().createExplosion(lightning, 0);
+	        }
+	        
+	        target.sendMessage("You feel a mighty thunder from the heavens...");
+	        
+	        }
+	        }
 	}
 		
+	
 	
 	//*****************************************************//
 	//*                                                   *//
