@@ -96,6 +96,31 @@ public class ERplayerListener extends PlayerListener {
 		inventory.removeItem(brick);	
 	}
 	
+	//*****************************************************//
+	//*                                                   *//
+	//*                                                   *//
+	//*               	     PLOW                         *//
+	//*                                                   *//
+	//*                                                   *//
+	//*****************************************************//
+	
+	if(i1 == 5 && i2 == 3 && i3 == 3 && i4 == 5) {
+		player.sendMessage("plow");
+		Block plowtotem = event.getClickedBlock();
+		for(int z = -1; z <= 1; z++) {
+		  for(int x = -1; x <= 1; x++) {
+		    for(int y = -1; y <= 1; y++) {
+		      if(base.getRelative(x, y, z).getType().equals(Material.GRASS)) {
+		        System.out.println("I found a diamond block nearby...");
+		        
+		        player.sendMessage("Diamond Nearby!");
+		      }
+		    }
+		  }
+		}
+	}
+		
+	
 	
 	//*****************************************************//
 	//*                                                   *//
@@ -110,7 +135,7 @@ public class ERplayerListener extends PlayerListener {
 	        if(state instanceof Sign){
 	        Sign sign = (Sign)state;
 	        String line = sign.getLine(1);
-	        player.sendMessage("Line2:" + line);
+	       // player.sendMessage("Line2:" + line);
 	        Player target = (Bukkit.getServer().getPlayer(line));
 	        if (target == null) {
 	        	player.sendMessage("The target was not present!");
