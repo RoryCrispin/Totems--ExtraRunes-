@@ -22,7 +22,7 @@ public class ERblockListener extends BlockListener {
 		Block block = event.getBlockPlaced();
 		
 		
-			player.sendMessage(ChatColor.RED + "Block Placed!"); 
+			//player.sendMessage(ChatColor.RED + "Block Placed!"); 
 			//event.setCancelled(true); 
 			
 		

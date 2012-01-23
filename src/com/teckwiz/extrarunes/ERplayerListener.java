@@ -2,6 +2,8 @@ package com.teckwiz.extrarunes;
 
 
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -63,9 +65,45 @@ public class ERplayerListener extends PlayerListener {
 	Material m4 = b4.getType();
 	int i4 = m4.getId();
 	
-	//debug 
-	//player.sendMessage("?Totem Clicked? : " + i1 +" " + i2 +" " + i3 + " " +  i4);
-	//Explosion Totem
+
+	PlayerInventory inventory = player.getInventory();
+    ItemStack empty = new ItemStack(Material.AIR, 1);
+    ItemStack newItem = new ItemStack(Material.DIAMOND_AXE, 1);
+    ItemStack brick = new ItemStack(Material.BRICK, 1);
+    ItemStack hand = inventory.getItemInHand();
+    int handid = hand.getTypeId();
+    int baseid = base.getTypeId();
+    
+	    //*****************************************************//
+		//*                                                   *//
+		//*                                                   *//
+		//*               BRICKBUILDING                       *//
+		//*                                                   *//
+		//*                                                   *//
+		//*****************************************************//
+	if(handid == 45 && baseid == 58) {
+		event.setCancelled(true);
+		HitBlox hb = new HitBlox(player, player.getWorld());
+		Block b = hb.getTargetBlock();
+		Block nb = hb.getLastBlock(); 
+		event.setCancelled(true);
+		nb.setTypeId(45);
+		player.sendMessage("Oops!");
+		inventory.remove(brick);
+		inventory.removeItem(brick);
+		
+		
+		
+	}
+		
+	
+	//*****************************************************//
+	//*                                                   *//
+	//*                                                   *//
+	//*                  EXPLOSTION                       *//
+	//*                                                   *//
+	//*                                                   *//
+	//*****************************************************//
 	
 	if(i1 == 87 && i2 == 88 && i3 == 88 && i4 == 87) {
 		//clear the blocks
@@ -76,61 +114,67 @@ public class ERplayerListener extends PlayerListener {
 		event.getClickedBlock().getWorld().createExplosion(loclick, 10);
 		player.sendMessage(ChatColor.RED + "You feel the ground ripple beneath you, and an almighty thunder!");
 		}
-		
-	//Repair Items
+	
+	
+	//*****************************************************//
+	//*                                                   *//
+	//*                                                   *//
+	//*                  REPAIR ITEMS                     *//
+	//*                                                   *//
+	//*                                                   *//
+	//*****************************************************//
 	if(i1 == 58 && i2 == 45 && i3 == 45 && i4 == 58) {
 			
 			//working code
-			PlayerInventory inventory = player.getInventory();
-		    ItemStack empty = new ItemStack(Material.AIR, 1);
-		    ItemStack newItem = new ItemStack(Material.DIAMOND_AXE, 1);
-		    ItemStack hand = inventory.getItemInHand();
-		    int handid = hand.getTypeId();
 		    if(handid == 276 || handid == 277 || handid == 278 || handid == 279 || handid == 293 ){
 		    	//*Diamond Tool**
 		    	newItem.setTypeId(handid);
 		    	short dmgB = hand.getDurability();
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				    int dmgBint = dmgB - 400;
-				    player.sendMessage("dmgB: "+dmgB);
+				   // player.sendMessage("dmgB: "+dmgB);
 				    short dmgA = (short) dmgBint;
 				    if(dmgA < 0) {
 				    	dmgA = 0;
 				    }
-				    
-				    
-				    player.sendMessage("dmgA: "+dmgA);
+				    event.getClickedBlock().getWorld().createExplosion(loclick, 0);
+				    b2.setTypeId(0);
+					b3.setTypeId(0);
+				    //player.sendMessage("dmgA: "+dmgA);
 				    int hid = hand.getTypeId();
 				    
-				    player.sendMessage("Item: " + hid);
-				    
+				    //player.sendMessage("Item: " + hid);
+				   
 				    hand.setTypeId(hid);  
 				    if(dmgA < 0) {
 				    	dmgA = 0;
 				    }
 				    hand.setDurability(dmgA);
+				    event.setCancelled(true);
 				        player.sendMessage(ChatColor.GOLD + "You feel a surge of energy pass through your spine.");
 		    		}
 		    if(handid == 256 || handid == 257 || handid == 258 || handid == 267 || handid == 293 ){
+		    	
 		    	//*Iron Tools**
 		    	newItem.setTypeId(handid);
 		    	short dmgB = hand.getDurability();
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				    int dmgBint = dmgB - 180;
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				    short dmgA = (short) dmgBint;
 				    if(dmgA < 0) {
 				    	dmgA = 0;
 				    }
-				    
-				   
-				    player.sendMessage("dmgA: "+dmgA);
+				    b2.setTypeId(0);
+					b3.setTypeId(0);
+					event.getClickedBlock().getWorld().createExplosion(loclick, 0);
+				    //player.sendMessage("dmgA: "+dmgA);
 				    int hid = hand.getTypeId();
 				    
-				    player.sendMessage("Item: " + hid);
-				    
+				    //player.sendMessage("Item: " + hid);
 				    hand.setTypeId(hid);  
 				    hand.setDurability(dmgA);
+				    event.setCancelled(true);
 				        player.sendMessage(ChatColor.GOLD + "You feel a surge of energy pass through your spine.");
 		    		}
 		    
@@ -138,38 +182,41 @@ public class ERplayerListener extends PlayerListener {
 		    	//*Stone Tools**
 		    	newItem.setTypeId(handid);
 		    	short dmgB = hand.getDurability();
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				    int dmgBint = dmgB - 90;
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				    short dmgA = (short) dmgBint;
 				    if(dmgA < 0) {
 				    	dmgA = 0;
 				    }
-				    
-				    
-				    player.sendMessage("dmgA: "+dmgA);
+				    b2.setTypeId(0);
+					b3.setTypeId(0);
+					event.getClickedBlock().getWorld().createExplosion(loclick, 0);
+				    //player.sendMessage("dmgA: "+dmgA);
 				    int hid = hand.getTypeId();
 				    
-				    player.sendMessage("Item: " + hid);
+				    //player.sendMessage("Item: " + hid);
 				    
 				    hand.setTypeId(hid);  
 				    hand.setDurability(dmgA);
+				    event.setCancelled(true);
 				        player.sendMessage(ChatColor.GOLD + "You feel a surge of energy pass through your spine.");
 		    		}
 		    if(handid == 268 || handid == 269 || handid == 270 || handid == 271 || handid == 290 ){
 		    	//*Wood Tools**
 		    	newItem.setTypeId(handid);
 		    	short dmgB = hand.getDurability();
-				    player.sendMessage("dmgB: "+dmgB);
+				   // player.sendMessage("dmgB: "+dmgB);
 				    int dmgBint = dmgB - 40;
-				    player.sendMessage("dmgB: "+dmgB);
-				    
-				    
+				    //player.sendMessage("dmgB: "+dmgB);
+				    b2.setTypeId(0);
+					b3.setTypeId(0);
+					event.getClickedBlock().getWorld().createExplosion(loclick, 0);
 				    short dmgA = (short) dmgBint;
 				    if (dmgA < 0) {
 				    	dmgA = 0;
 				    }
-				    player.sendMessage("dmgA: "+dmgA);
+				    //player.sendMessage("dmgA: "+dmgA);
 				    int hid = hand.getTypeId();
 				    
 				    player.sendMessage("Item: " + hid);
@@ -178,33 +225,38 @@ public class ERplayerListener extends PlayerListener {
 				    hand.setTypeId(hid);  
 				    hand.setDurability(dmgA);
 				    //inventory.addItem(newItem);
+				    event.setCancelled(true);
 				        player.sendMessage(ChatColor.GOLD + "You feel a surge of energy pass through your spine.");
 		    		}
 		    if(handid == 283 || handid == 284 || handid == 285 || handid == 286 || handid == 294 ){
 		    	//*Gold Tools**
 		    	newItem.setTypeId(handid);
 		    	short dmgB = hand.getDurability();
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				    int dmgBint = dmgB - 25;
-				    player.sendMessage("dmgB: "+dmgB);
+				    //player.sendMessage("dmgB: "+dmgB);
 				     short dmgA = (short) dmgBint;
 				    if(dmgA < 0) {
 				    	dmgA = 0;
 				    }
-				    
-				   
-				    player.sendMessage("dmgA: "+dmgA);
+				    b2.setTypeId(0);
+					b3.setTypeId(0);
+					event.getClickedBlock().getWorld().createExplosion(loclick, 0);
+				    //player.sendMessage("dmgA: "+dmgA);
 				    int hid = hand.getTypeId();
 				    
-				    player.sendMessage("Item: " + hid);
+				    //player.sendMessage("Item: " + hid);
 				    
 				    hand.setTypeId(hid);  
 				    hand.setDurability(dmgA);
+				    event.setCancelled(true);
 				        player.sendMessage(ChatColor.GOLD + "You feel a surge of energy pass through your spine.");
 		    		}
 		    
 		    
 		}
+	
+	
 		}
 			
 			
@@ -226,9 +278,9 @@ public class ERplayerListener extends PlayerListener {
 	Location loc = item.getLocation();
 	World w = loc.getWorld();
 	Block b = w.getBlockAt(loc);
-	event.getItemDrop().getWorld().createExplosion(loc, 0);
+	//event.getItemDrop().getWorld().createExplosion(loc, 0);
 	
-	player.sendMessage("Plop!");
+	//player.sendMessage("Plop!");
 }
 
     
