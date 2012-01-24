@@ -105,21 +105,34 @@ public class ERplayerListener extends PlayerListener {
 	//*****************************************************//
 	
 	if(i1 == 5 && i2 == 3 && i3 == 3 && i4 == 5) {
-		player.sendMessage("plow");
-		Block plowtotem = event.getClickedBlock();
-		for(int z = -1; z <= 1; z++) {
-		  for(int x = -1; x <= 1; x++) {
-		    for(int y = -1; y <= 1; y++) {
-		      if(base.getRelative(x, y, z).getType().equals(Material.GRASS)) {
-		        System.out.println("I found a diamond block nearby...");
-		        
-		        player.sendMessage("Diamond Nearby!");
-		      }
-		    }
-		  }
+		if( handid != 292) {
+    		player.sendMessage(ChatColor.GOLD+ "The magic requires an Iron Hoe to be held!");
 		}
-	}
 		
+		Block plowtotem = event.getClickedBlock();
+		for(int z = -5; z <= 5; z++) {
+		  for(int x = -5; x <= 5; x++) {
+		    for(int y = -5; y <= 5; y++) {
+		     if(base.getRelative(x, y, z).getType().equals(Material.GRASS) || base.getRelative(x, y, z).getTypeId() == 3) {
+		    	 Block fnd = base.getRelative(x, y, z);
+		    	Location locfnd = fnd.getLocation();
+		    	Location locfndup = locfnd.add(0, 1, 0);
+		    	World locfndupW = locfndup.getWorld();
+		    	Block locfndupB = locfndupW.getBlockAt(locfndup);
+		    	 if(locfndupB.getTypeId() == 0) {
+		    		 if(handid == 292){
+		    		hand.setTypeId(0);
+		    		 fnd.setTypeId(60);
+		    	    
+		    		base.setTypeId(0);
+			        b2.setTypeId(0);
+			        b3.setTypeId(0);
+			        b4.setTypeId(0);
+		    	 }
+		    	}
+		    
+		      }}}}}
+
 	
 	
 	//*****************************************************//
